@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const router = Router();
 const {
   getTemperamentsHandler,
 } = require("../handlers/temperamentsHandlers.js");
 
+const routerTemperaments = Router();
 //GET | /temperaments
-//router.get("/temperaments", getTemperamentsHandler);
+routerTemperaments.get("/", getTemperamentsHandler);
 
-module.exports = router;
+module.exports = routerTemperaments;

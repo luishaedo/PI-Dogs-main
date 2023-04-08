@@ -1,33 +1,30 @@
 const axios = require("axios");
 const { Dogs, Temperaments } = require("../db");
-//require("dotenv").config();
-const API_KEY =
-  "live_tIBjsLRSGkfr5JDdY7EwzuEjQMni6bG1ImlD1VZ7wXDfAZrhfaraBmrpJudm2Lce";
-//process.env.API_KEY;
-
-/* 
-infoDog solo necesitaremos para el front estas prop
-id
-name
-image
-height
-weight
-life_span
-temperaments
-&?api_key=${API_KEY}
-*/
+const URL = `https://api.thedogapi.com/v1/breeds`;
 
 //FN concatenadora de info de Api + DB
-async function getAllData(name) {
-  const URL = `https://api.thedogapi.com/v1/breeds`;
-  let dataApi = await getDataApi();
-  let dataDb = await getDataDB();
-  let allData = dataApi.concat(dataDb);
-  // if (name)
-  //   Alldatafilter = allData.filter((e) =>
-  //     e.name.toLowerCase().includes(name.toLowerCase())
-  //   );
-  return allData.length ? allData : [];
+async function getAllData(name, id) {
+  const dataApi = await getDataApi();
+  const dataDb = await getDataDB();
+  const allData = dataApi.concat(dataDb);
+  if (name) return filterDataName(allData, name);
+  else if (id) return filterDataId(allData, id);
+  else return allData;
+}
+
+// FN para filtrar por name
+function filterDataName(allData, name) {
+  const filteredDataName = allData.filter((e) =>
+    e.name.toLowerCase().includes(name.toLowerCase())
+  );
+  return filteredDataName.length ? filteredDataName : [];
+}
+
+//FN para filtrar por ID
+function filterDataId(allData, id) {
+  const idString = id.toString();
+  const filteredDataId = allData.filter((e) => e.id.toString() === idString);
+  return filteredDataId.length ? filteredDataId : [];
 }
 
 // FN busca info de API y nos devuelve en el formato necesario
@@ -70,4 +67,41 @@ async function getDataDB() {
   return resultsDB;
 }
 
-module.exports = { getDataApi, getDataDB, getAllData };
+async function postDogDB(newDog, temperaments) {
+  const dogCreate = await Dogs.create(newDog);
+  const temperametOfDog = await Temperaments.findAll({
+    where: {
+      name: temperaments,
+    },
+  });
+  await dogCreate.addTemperament(temperametOfDog);
+
+  return dogCreate;
+}
+
+async function getAllTemperaments() {
+  let response = await axios.get(URL);
+  let resultsApiTemp = response.data.map((perro) =>
+    perro.temperament?.split(", ")
+  );
+  const arrTemperaments = [].concat(...resultsApiTemp);
+
+  const borrarDuplicados = new Set(arrTemperaments);
+  borrarDuplicados.forEach(async (temp) => {
+    if (temp) {
+      await Temperaments.findOrCreate({
+        where: { name: temp },
+      });
+    }
+  });
+  const allTemperamentsDB = await Temperaments.findAll();
+  return allTemperamentsDB;
+}
+
+module.exports = {
+  getDataApi,
+  getDataDB,
+  getAllData,
+  postDogDB,
+  getAllTemperaments,
+};
