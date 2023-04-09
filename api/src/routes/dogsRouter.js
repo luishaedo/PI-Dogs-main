@@ -11,7 +11,6 @@ dogsRouter.get("/", getDogsHandler);
 
 dogsRouter.get("/:idRaza", getDogHandler);
 
-//POST | /dogs
 dogsRouter.post("/", postDogHandler);
 
 module.exports = dogsRouter;

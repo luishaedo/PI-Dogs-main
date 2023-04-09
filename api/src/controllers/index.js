@@ -53,7 +53,7 @@ async function getDataDB() {
     include: Temperaments,
   });
   const resultsDB = response.map((perro) => {
-    const { id, name, image, height, weight, life_span, temperament } = perro;
+    const { id, name, image, height, weight, life_span } = perro;
     return {
       id,
       name,
@@ -61,7 +61,6 @@ async function getDataDB() {
       height,
       weight,
       life_span,
-      temperament: temperament.name,
     };
   });
   return resultsDB;
@@ -69,14 +68,21 @@ async function getDataDB() {
 
 async function postDogDB(newDog, temperaments) {
   const dogCreate = await Dogs.create(newDog);
-  const temperametOfDog = await Temperaments.findAll({
-    where: {
-      name: temperaments,
-    },
-  });
-  await dogCreate.addTemperament(temperametOfDog);
+  const temperamentsArray = temperaments.split(",").map((t) => t.trim());
+  const temperamentsId = [];
+  for (const temperament of temperamentsArray) {
+    const temperametOfDog = await Temperaments.findOne({
+      where: {
+        name: temperament,
+      },
+    });
+    if (temperametOfDog) {
+      temperamentsId.push(temperametOfDog.id);
+    }
+  }
+  await dogCreate.addTemperament(temperamentsId);
 
-  return dogCreate;
+  return await Dogs.findByPk(dogCreate.id, { include: Temperaments });
 }
 
 async function getAllTemperaments() {

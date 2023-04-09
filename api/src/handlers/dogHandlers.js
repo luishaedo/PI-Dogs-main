@@ -1,17 +1,12 @@
-const {
-  getDataApi,
-  getDataDB,
-  getAllData,
-  postDogDB,
-} = require("../controllers");
+const { getAllData, postDogDB } = require("../controllers");
 
 const getDogsHandler = async (req, res) => {
-  const name = req.query.name;
+  const { name } = req.query;
   try {
-    let results = name ? await getAllData(name) : await getAllData();
-    // if (results.length === 0) {
-    //   return res.status(404).json({ error: "No se encontraron resultados." });
-    // }
+    let results = [];
+    if (typeof name === "undefined" || !name)
+      results = await getAllData(null, null);
+    else results = await getAllData(name, null);
     res.status(200).json({ results });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -21,12 +16,11 @@ const getDogsHandler = async (req, res) => {
 const getDogHandler = async (req, res) => {
   const id = req.params.idRaza;
   try {
-    let resultsId = await getAllData(null, id);
+    let resultsId = [];
+    resultsId = await getAllData(null, id);
     res.status(200).json({ resultsId });
   } catch (error) {
-    res
-      .status(400)
-      .json({ error: "No se encontraron resultados para ese ID." });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -45,7 +39,7 @@ const postDogHandler = async (req, res) => {
     const createdDog = await postDogDB(newDog, temperaments);
     res.status(201).json(createdDog);
   } catch (error) {
-    res.status(500).json({ error: "Error al crear el perro" });
+    res.status(500).json({ error: error.message });
   }
 };
 
