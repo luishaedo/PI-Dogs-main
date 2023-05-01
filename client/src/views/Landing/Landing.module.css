@@ -1,0 +1,43 @@
+.landing {
+  background-image: url("../../../public/Black.jpg");
+}
+
+.h2Landing {
+  font-size: 36px;
+  font-weight: bold;
+  color: #e0dcdc;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.h3Landing {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.btn_Entrada {
+  display: block;
+  margin: 0 auto;
+  color: white;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: 2px solid transparent;
+  border-radius: 40px;
+  transition: all 0.3s ease-in-out;
+  background-color: #312f2f;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  max-width: 80px;
+}
+
+.btn_Entrada:hover {
+  background-color: transparent;
+  color: #e0dcdc;
+}

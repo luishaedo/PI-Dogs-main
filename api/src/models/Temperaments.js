@@ -7,10 +7,9 @@ module.exports = (sequelize) => {
     "temperaments",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        //autoIncrement: true,
       },
       name: {
         type: DataTypes.STRING,

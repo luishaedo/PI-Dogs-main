@@ -1,0 +1,88 @@
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.clearButton {
+  flex: 1;
+  font-size: 12px;
+  padding: 2px;
+  color: #fff;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.clearButton {
+  margin-left: 5px;
+  padding: 2px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.clearButton:hover {
+  background-color: #a71d2a;
+}
+
+.select-container {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+.select-container select {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-container select::-ms-expand {
+  display: none;
+}
+
+.select-container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #666666;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.select-container.select-down::after {
+  border-top: none;
+  border-bottom: 6px solid #666666;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-container select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}

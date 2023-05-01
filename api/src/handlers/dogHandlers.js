@@ -25,18 +25,20 @@ const getDogHandler = async (req, res) => {
 };
 
 const postDogHandler = async (req, res) => {
-  const { name, image, height, weight, life_span, temperaments } = req.body;
-  if (!name || !image || !height || !weight || !life_span || !temperaments)
-    return res.status(400).json({ error: "Faltan datos" });
+  const { name, height, weight, life_span, temperament } = req.body;
+  if (!name || !height || !weight || !life_span || !temperament)
+    return res.status(400).json({ error: "All fields are required" });
   try {
     const newDog = {
       name,
-      image,
       height,
       weight,
       life_span,
+      temperament,
+      image: "Default",
+      created: true,
     };
-    const createdDog = await postDogDB(newDog, temperaments);
+    const createdDog = await postDogDB(newDog, temperament);
     res.status(201).json(createdDog);
   } catch (error) {
     res.status(500).json({ error: error.message });

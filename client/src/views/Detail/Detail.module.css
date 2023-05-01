@@ -1,0 +1,36 @@
+.detailContainer h1 {
+  background-color: #333;
+  color: #fff;
+  padding: 12px;
+  margin-bottom: 24px;
+}
+.detailCard .cardImage {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.detailCard .cardImage img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.detailCard .cardInfo {
+  background-color: #f4f4f4;
+  padding: 24px;
+  border-radius: 4px;
+}
+.detailCard .cardInfoDetails {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.detailCard .cardInfoDetails li {
+  margin-bottom: 12px;
+}
+.detailCard .cardInfoDetails .infoLabel {
+  font-weight: bold;
+  margin-right: 8px;
+}
+.detailCard .cardInfoDetails .detailInfoText {
+  font-size: 16px;
+  color: #333;
+}

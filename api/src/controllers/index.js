@@ -34,14 +34,17 @@ async function getDataApi() {
     const heightMetric = perro.height.metric;
     const weightMetric = perro.weight.metric;
     const imageUrl = perro.image.url;
+    const created = false;
     return {
       id: perro.id,
       name: perro.name,
       image: imageUrl,
       height: heightMetric,
       weight: weightMetric,
+      origin: perro.origin,
       life_span: perro.life_span,
       temperament: perro.temperament,
+      created,
     };
   });
   return resultsApi;
@@ -66,9 +69,9 @@ async function getDataDB() {
   return resultsDB;
 }
 
-async function postDogDB(newDog, temperaments) {
+async function postDogDB(newDog, temperament) {
   const dogCreate = await Dogs.create(newDog);
-  const temperamentsArray = temperaments.split(",").map((t) => t.trim());
+  const temperamentsArray = temperament.split(",").map((t) => t.trim());
   const temperamentsId = [];
   for (const temperament of temperamentsArray) {
     const temperametOfDog = await Temperaments.findOne({
@@ -105,8 +108,6 @@ async function getAllTemperaments() {
 }
 
 module.exports = {
-  getDataApi,
-  getDataDB,
   getAllData,
   postDogDB,
   getAllTemperaments,
