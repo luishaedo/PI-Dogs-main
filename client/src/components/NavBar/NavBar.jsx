@@ -1,13 +1,14 @@
 import styles from "./NavBar.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getDogsByName } from "../../redux/actions/actions";
 
 const NavBar = () => {
   const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   function handleChange(e) {
     e.preventDefault();
@@ -30,6 +31,11 @@ const NavBar = () => {
         <Link to="/dogs" className={styles.link}>
           InfoDogs
         </Link>
+        {location.pathname !== "/dogs" && (
+          <Link to="/dogs" className={styles.link}>
+            Back
+          </Link>
+        )}
         <Link to="/form" className={styles.link}>
           Add Breed
         </Link>

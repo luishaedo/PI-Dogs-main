@@ -20,12 +20,14 @@ const Card = (props) => {
           <div className={styles.cardImage} style={cardStyle}></div>
         )}
         <div className={styles.cardInfo}>
-          <p>ID: {props.id}</p>
-          <p>{props.name}</p>
-          <p>Height: {props.height} cm</p>
-          <p>Weight: {props.weight} kg</p>
-          <p>Life Span: {props.life_span}</p>
-          <p>Temperament: {props.temperament}</p>
+          <p className={styles.pName}>{props.name}</p>
+          <p className={styles.cardInfo}>ID: {props.id}</p>
+          <p className={styles.cardInfo}>Height: {props.height} cm</p>
+          <p className={styles.cardInfo}>Weight: {props.weight} kg</p>
+          <p className={styles.cardInfo}>Life Span: {props.life_span}</p>
+          {props.temperament && (
+            <p className={styles.cardInfo}>Temperament: {props.temperament}</p>
+          )}
         </div>
       </div>
     </div>

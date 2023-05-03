@@ -9,6 +9,7 @@ import {
   LIMPIAR_FILTROS,
   ORDER_RESULT,
   SET_CURRENT_PAGE,
+  SEARCHED,
   ERROR,
 } from "../actions/actionsTypes.js";
 
@@ -18,11 +19,12 @@ const initialState = {
   dog: [],
   temperaments: [],
   temperamentsFilter: [],
-  // createdFilter: [],
+  createdFilter: "",
   orderBy: "name",
   orderType: "up",
   currentPage: 1,
   cardsPerPage: 8,
+  searchDog: "",
   error: null,
 };
 
@@ -87,7 +89,7 @@ const rootReducer = (state = initialState, action) => {
           copyResults: state.copyResults,
         };
       }
-
+      console.log("log en reducer apayload", action.payload);
       action.payload === true
         ? (filterOrigin = state.copyResults.filter(
             (dog) => dog.created === true
@@ -142,6 +144,15 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         copyResults: state.results,
         temperamentsFilter: [],
+        createdFilter: [],
+        orderBy: "name",
+        orderType: "up",
+      };
+
+    case SEARCHED:
+      return {
+        ...state,
+        searchDog: action.payload,
       };
 
     default:

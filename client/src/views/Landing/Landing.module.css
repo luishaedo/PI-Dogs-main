@@ -1,5 +1,15 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .landing {
   background-image: url("../../../public/Black.jpg");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
 }
 
 .h2Landing {
@@ -9,16 +19,14 @@
   text-align: center;
   padding: 20px;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); */
 }
 
 .h3Landing {
   font-size: 24px;
   font-weight: bold;
-  color: #333333;
+  color: #dddddd;
   text-align: center;
-  padding: 10px;
-  margin-bottom: 10px;
 }
 
 .btn_Entrada {

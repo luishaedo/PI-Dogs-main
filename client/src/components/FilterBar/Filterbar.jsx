@@ -57,7 +57,7 @@ const FilterBar = () => {
             <option value={true}>Info Dogs</option>
           </select>
         </div>
-        <li className={styles.temperamentLabel}>Temperamentos</li>
+        <li className={styles.temperamentLabel}>Temperaments</li>
         <SelectedTemperaments />
       </ul>
       <div className={styles.ordenarContainer}>
@@ -76,7 +76,7 @@ const FilterBar = () => {
       </div>
       <div className={styles.buttonContainer}>
         <button className={styles.clearButton} onClick={handleLimpiarFiltro}>
-          Limpiar
+          CLEAN
         </button>
       </div>
     </div>

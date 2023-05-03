@@ -9,6 +9,7 @@ import {
   POST_DOG,
   ORDER_RESULT,
   SET_CURRENT_PAGE,
+  SEARCHED,
   ERROR,
 } from "./actionsTypes";
 import axios from "axios";
@@ -116,6 +117,13 @@ export const orderResult = (orderBy, orderType) => {
       orderBy,
       orderType,
     },
+  };
+};
+
+export const searched = (search) => {
+  return {
+    type: SEARCHED,
+    payload: search,
   };
 };
 

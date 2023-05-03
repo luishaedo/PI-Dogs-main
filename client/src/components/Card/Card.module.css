@@ -20,13 +20,19 @@
   border-radius: 5px;
 }
 
-.cardInfo {
-  padding: 5px;
-  font-size: 15px;
+.pName {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.cardInfo p {
-  font-weight: bold;
-  margin: 5px;
-  font-weight: 500;
+.cardInfo {
+  display: flex;
+  margin: 1px 0;
+  font-weight: 400;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 5px;
 }

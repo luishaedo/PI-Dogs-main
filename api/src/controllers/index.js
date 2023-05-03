@@ -53,10 +53,28 @@ async function getDataApi() {
 // FN busca info DB y nos la devuelve en el mismo formato!
 async function getDataDB() {
   const response = await Dogs.findAll({
-    include: Temperaments,
+    include: {
+      model: Temperaments,
+      attributes: ["name"], //atributos que quiero traer del modelo Temperament, el id lo trae automatico
+      through: {
+        attributes: [], //traer mediante los atributos del modelo
+      },
+    },
   });
   const resultsDB = response.map((perro) => {
-    const { id, name, image, height, weight, life_span } = perro;
+    const {
+      id,
+      name,
+      image,
+      height,
+      weight,
+      life_span,
+      created,
+      temperaments,
+    } = perro;
+
+    const temperamentArr = perro.temperaments.map((t) => t.name);
+    const temperament = temperamentArr.join(", ");
     return {
       id,
       name,
@@ -64,6 +82,8 @@ async function getDataDB() {
       height,
       weight,
       life_span,
+      created,
+      temperament,
     };
   });
   return resultsDB;
@@ -85,7 +105,7 @@ async function postDogDB(newDog, temperament) {
   }
   await dogCreate.addTemperament(temperamentsId);
 
-  return await Dogs.findByPk(dogCreate.id, { include: Temperaments });
+  return dogCreate;
 }
 
 async function getAllTemperaments() {

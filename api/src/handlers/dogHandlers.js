@@ -36,7 +36,6 @@ const postDogHandler = async (req, res) => {
       life_span,
       temperament,
       image: "Default",
-      created: true,
     };
     const createdDog = await postDogDB(newDog, temperament);
     res.status(201).json(createdDog);
