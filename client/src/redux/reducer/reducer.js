@@ -86,10 +86,9 @@ const rootReducer = (state = initialState, action) => {
       if (action.payload === "Default") {
         return {
           ...state,
-          copyResults: state.copyResults,
+          copyResults: state.results,
         };
       }
-      console.log("log en reducer apayload", action.payload);
       action.payload === true
         ? (filterOrigin = state.copyResults.filter(
             (dog) => dog.created === true
@@ -107,6 +106,7 @@ const rootReducer = (state = initialState, action) => {
       const { orderBy, orderType } = action.payload;
       const sortedResults = [...state.results].sort((a, b) => {
         const order = orderType === "up" ? 1 : -1;
+
         if (orderBy === "name") {
           if (a[orderBy] > b[orderBy]) {
             return order;

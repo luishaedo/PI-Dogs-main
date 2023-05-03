@@ -55,7 +55,7 @@ async function getDataDB() {
   const response = await Dogs.findAll({
     include: {
       model: Temperaments,
-      attributes: ["name"], //atributos que quiero traer del modelo Temperament, el id lo trae automatico
+      attributes: ["name"], //atributos que quiero traer del modelo Temperament
       through: {
         attributes: [], //traer mediante los atributos del modelo
       },
@@ -90,19 +90,24 @@ async function getDataDB() {
 }
 
 async function postDogDB(newDog, temperament) {
+  //se utiliza create (seq) para crear un nuevo reg de perro en la tabla Dogs
   const dogCreate = await Dogs.create(newDog);
   const temperamentsArray = temperament.split(",").map((t) => t.trim());
   const temperamentsId = [];
+  // se busca en la tabla Temperaments el registro correspondiente al temp en cuestion con FindOne
+
   for (const temperament of temperamentsArray) {
     const temperametOfDog = await Temperaments.findOne({
       where: {
         name: temperament,
       },
     });
+    // se agrega el id del temperamento al array
     if (temperametOfDog) {
       temperamentsId.push(temperametOfDog.id);
     }
   }
+  //se asocia los temp seleccionado al dog nuevo
   await dogCreate.addTemperament(temperamentsId);
 
   return dogCreate;
@@ -110,11 +115,14 @@ async function postDogDB(newDog, temperament) {
 
 async function getAllTemperaments() {
   let response = await axios.get(URL);
+  //se extraen los temp con map y se los separa
   let resultsApiTemp = response.data.map((perro) =>
     perro.temperament?.split(", ")
   );
+  //se junta los temp con spreed
   const arrTemperaments = [].concat(...resultsApiTemp);
 
+  // se utiliza set para eliminar duplicados  y se verifica su con forEach si ya existen
   const borrarDuplicados = new Set(arrTemperaments);
   borrarDuplicados.forEach(async (temp) => {
     if (temp) {
@@ -123,6 +131,7 @@ async function getAllTemperaments() {
       });
     }
   });
+  // se obtienen todos los resultados de db y se devuleven
   const allTemperamentsDB = await Temperaments.findAll();
   return allTemperamentsDB;
 }

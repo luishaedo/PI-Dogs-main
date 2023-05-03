@@ -4,6 +4,7 @@ import { getDogs, setCurrentPage } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import FilterBar from "../../components/FilterBar/Filterbar";
+import Error from "../../components/Error/Error";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ const Home = () => {
   const cardsPerPage = useSelector((state) => state.cardsPerPage);
   const orderBy = useSelector((state) => state.orderBy);
   const orderType = useSelector((state) => state.orderType);
-  console.log(allDogs);
 
   useEffect(() => {
     dispatch(getDogs());
