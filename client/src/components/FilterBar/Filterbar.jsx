@@ -10,7 +10,7 @@ import SelectedTemperaments from "../SelectedTemperaments/SelectedTemperaments.j
 
 const FilterBar = () => {
   const dispatch = useDispatch();
-  const [created, setCreated] = useState("Default");
+  const [created, setCreated] = useState("All");
   const [orderBy, setOrderBy] = useState("name");
   const [orderType, setOrderType] = useState("up");
 
@@ -52,7 +52,7 @@ const FilterBar = () => {
             value={created}
             onChange={handleOriginChange}
           >
-            <option value="Default">---</option>
+            <option value="All">ALL</option>
             <option value={false}>Dog's Api</option>
             <option value={true}>Info Dogs</option>
           </select>

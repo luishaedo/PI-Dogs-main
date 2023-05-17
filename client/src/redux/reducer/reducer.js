@@ -11,6 +11,7 @@ import {
   SET_CURRENT_PAGE,
   SEARCHED,
   ERROR,
+  CLEAN_DETAIL,
 } from "../actions/actionsTypes.js";
 
 const initialState = {
@@ -22,9 +23,9 @@ const initialState = {
   createdFilter: "",
   orderBy: "name",
   orderType: "up",
+  searchDog: "",
   currentPage: 1,
   cardsPerPage: 8,
-  searchDog: "",
   error: null,
 };
 
@@ -51,6 +52,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         dog: action.payload,
       };
+
     case ERROR:
       return {
         ...state,
@@ -60,12 +62,15 @@ const rootReducer = (state = initialState, action) => {
     case TEMPERAMENTS_FILTER:
       let filteredBreeds = [];
       if (action.payload.length > 0) {
+        //se selecciono 1 temp
         if (action.payload.length === 1) {
           filteredBreeds = state.copyResults?.filter((dog) =>
             dog.temperament?.includes(action.payload[0])
           );
         } else {
+          //varios temp
           filteredBreeds = state.copyResults?.filter((dog) => {
+            //se guardan los temp de cada perro separados y se analiza si estan en los seleccionados
             const temperamentArr = dog.temperament?.split(", ");
             return action.payload.every((temp) =>
               temperamentArr?.includes(temp.trim())
@@ -83,19 +88,19 @@ const rootReducer = (state = initialState, action) => {
 
     case CREATED_FILTER:
       let filterOrigin = [];
-      if (action.payload === "Default") {
+      if (action.payload === "All") {
         return {
           ...state,
           copyResults: state.results,
         };
       }
-      action.payload === true
-        ? (filterOrigin = state.copyResults.filter(
-            (dog) => dog.created === true
-          ))
-        : (filterOrigin = state.copyResults.filter(
-            (dog) => dog.created === false
-          ));
+
+      if (action.payload === true) {
+        filterOrigin = state.copyResults.filter((dog) => dog.created === true);
+      }
+      if (action.payload === false) {
+        filterOrigin = state.copyResults.filter((dog) => dog.created === false);
+      }
 
       return {
         ...state,
@@ -105,13 +110,16 @@ const rootReducer = (state = initialState, action) => {
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
       const sortedResults = [...state.results].sort((a, b) => {
+        //ascendentemente o descendentemente?
         const order = orderType === "up" ? 1 : -1;
 
         if (orderBy === "name") {
           if (a[orderBy] > b[orderBy]) {
+            //ascendente
             return order;
           }
           if (a[orderBy] < b[orderBy]) {
+            //descendente
             return -order;
           }
           return 0;
@@ -144,15 +152,21 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         copyResults: state.results,
         temperamentsFilter: [],
-        createdFilter: [],
+        createdFilter: "",
         orderBy: "name",
         orderType: "up",
+        searchDog: "",
       };
 
     case SEARCHED:
       return {
         ...state,
         searchDog: action.payload,
+      };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        dog: [],
       };
 
     default:

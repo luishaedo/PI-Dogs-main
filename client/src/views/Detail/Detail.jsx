@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
 import styles from "./Detail.module.css";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDogById } from "../../redux/actions/actions";
+import { cleanDetail, getDogById } from "../../redux/actions/actions";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -13,6 +13,9 @@ const Detail = () => {
     dispatch(getDogById(id)).then(() => {
       setLoading(false);
     });
+    return () => {
+      dispatch(cleanDetail());
+    };
   }, [id, dispatch]);
 
   const dog = useSelector(

@@ -32,6 +32,8 @@ const Form = () => {
 
   const [showDog, setShowDog] = useState(false);
 
+  const [disabled, setDisable] = useState(true);
+
   const temperaments = useSelector((state) => state.temperaments);
   const dog = useSelector((state) => state.dog);
   const route = `/Detail/${dog.id}`;
@@ -48,6 +50,7 @@ const Form = () => {
     const property = event.target.name;
     let value = event.target.value;
 
+    if (value.length > 2) setDisable(false);
     setForm({ ...form, [property]: value });
   };
 
@@ -248,7 +251,7 @@ const Form = () => {
         <p className={styles.errorMessage}>{errors.temperament}</p>
       )}
       <div>
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={styles.button} disabled={disabled}>
           Post breef
         </button>
       </div>

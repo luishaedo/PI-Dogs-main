@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const Error = ({ message }) => {
+const Error = () => {
+  const error = useSelector((state) => state.error);
+
   return (
     <div>
       <h2>Error</h2>
-      <p>{message}</p>
+      <p>{error.message}</p>
     </div>
   );
 };

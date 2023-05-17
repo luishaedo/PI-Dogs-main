@@ -1,19 +1,20 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Detail, Form, Home, Landing } from "./views";
 import NavBar from "./components/NavBar/NavBar";
-import { useLocation } from "react-router-dom";
 import Error from "./components/Error/Error";
 
 function App() {
   const location = useLocation();
-  const error = useSelector((state) => state.dogs.error);
+  const error = useSelector((state) => state.error);
 
   return (
     <div className="App">
       {location.pathname !== "/" && <NavBar />}
       {error ? (
-        <Error message={error} />
+        <Error />
       ) : (
         <Routes>
           <Route exact path="/" element={<Landing />} />

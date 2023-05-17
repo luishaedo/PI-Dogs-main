@@ -13,7 +13,7 @@
 .cardsContainer {
   box-sizing: border-box;
 }
-.pagination {
+/* .pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -35,4 +35,4 @@
   background-color: #cccccc;
   border-color: #cccccc;
   color: #ffffff;
-}
+} */

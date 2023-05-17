@@ -1,10 +1,9 @@
-import Cards from "../../components/Cards/Cards";
 import styles from "./Home.module.css";
-import { getDogs, setCurrentPage } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { getDogs, setCurrentPage } from "../../redux/actions/actions";
+import Cards from "../../components/Cards/Cards";
 import FilterBar from "../../components/FilterBar/Filterbar";
-import Error from "../../components/Error/Error";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,16 +15,21 @@ const Home = () => {
   const orderType = useSelector((state) => state.orderType);
 
   useEffect(() => {
-    dispatch(getDogs());
+    if (!allDogs.length) {
+      dispatch(getDogs());
+    }
+    // eslint-disable-next-line
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(setCurrentPage(1));
   }, [orderBy, orderType, dispatch]);
 
+  //calcular el indice de la ultima card de la pag actual y el indice 1era card de la pag actual
   const getCardsForCurrentPage = (currentPage, cardsPerPage, allDogs) => {
     const indexOfLastCard = currentPage * cardsPerPage;
     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+    //guardamos en currentCards ese conjunto de cards
     const currentCards = allDogs.slice(indexOfFirstCard, indexOfLastCard);
 
     return currentCards.length < cardsPerPage
@@ -40,6 +44,7 @@ const Home = () => {
   );
 
   const handlePrevPage = () => {
+    // indice ultima card en pag actual e indice 1era card en la pag ant
     const indexOfLastCard = currentPage * cardsPerPage;
     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
     if (indexOfFirstCard <= 0) {

@@ -11,6 +11,7 @@ import {
   SET_CURRENT_PAGE,
   SEARCHED,
   ERROR,
+  CLEAN_DETAIL,
 } from "./actionsTypes";
 import axios from "axios";
 
@@ -134,8 +135,14 @@ export const setCurrentPage = (page) => {
   };
 };
 
-export const limpiarFiltros = () => (dispatch) => {
-  dispatch({
+export const limpiarFiltros = () => {
+  return {
     type: LIMPIAR_FILTROS,
-  });
+  };
+};
+
+export const cleanDetail = () => {
+  return {
+    type: CLEAN_DETAIL,
+  };
 };
